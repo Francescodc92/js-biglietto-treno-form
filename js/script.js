@@ -35,7 +35,6 @@ const Form = {
   },
 
   reload: () => {
-    // console.log(nameInput, lastNameInput, kmToGoInput, ageInput)
     Form.nameInput.value = ""
     Form.lastNameInput.value = ""
     Form.kmToGoInput.value = ""
