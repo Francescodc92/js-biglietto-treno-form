@@ -1,18 +1,48 @@
+const Form = {
+  nameInput: document.querySelector("#name"),
+  lastNameInput: document.querySelector("#lastname"),
+  kmToGoInput: document.querySelector("#km-to-go"),
+  ageInput: document.querySelector("#age"),
+
+  submit: (e) => {
+    e.preventDefault()
+    const tableRow = document.querySelector("#table-row")
+    const nameValue = Form.nameInput.value
+    const lastNameValue = Form.lastNameInput.value
+    const kmToGoValue = Number(Form.kmToGoInput.value)
+    const ageValue = Number(Form.ageInput.value)
+
+    if (isNaN(ageValue) || isNaN(kmToGoValue)) {
+      alert("inserire valori numerici alla voce età e km da percorrere")
+    } else {
+      if (
+        nameValue != "" &&
+        lastNameValue != "" &&
+        ageValue != "" &&
+        kmToGoValue != ""
+      ) {
+        Output.fillHtmlTable(nameValue, lastNameValue, kmToGoValue, ageValue)
+      } else {
+        tableRow.innerHTML = `<td class="error-td"  colspan="5" >
+        <span class="error">inserisci dati validi</span>
+      </td>`
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000)
+      }
+    }
+  },
+
+  reload: () => {
+    // console.log(nameInput, lastNameInput, kmToGoInput, ageInput)
+    Form.nameInput.value = ""
+    Form.lastNameInput.value = ""
+    Form.kmToGoInput.value = ""
+    Form.ageInput.value = ""
+  },
+}
 const form = document.querySelector("form")
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault()
-  const nameInput = document.querySelector("#name")
-  const lastNameInput = document.querySelector("#lastname")
-  const kmToGoInput = document.querySelector("#km-to-go")
-  const ageInput = document.querySelector("#age")
-  const nameValue = nameInput.value
-  const lastNameValue = lastNameInput.value
-  const kmToGoValue = Number(kmToGoInput.value)
-  const ageValue = Number(ageInput.value)
-
-  Output.fillHtmlTable(nameValue, lastNameValue, kmToGoValue, ageValue)
-})
 
 const Output = {
   fillHtmlTable: (name, lastName, kmToGo, age) => {
@@ -24,9 +54,11 @@ const Output = {
 
     nameElement.innerHTML = name
     lastnameElement.innerHTML = lastName
-    kmToGoElement.innerHTML = kmToGo
+    kmToGoElement.innerHTML = kmToGo + "km"
     discountElement.innerHTML = Utils.calculatePrice(age, kmToGo).discount
-    priceElement.innerHTML = Utils.calculatePrice(age, kmToGo).price
+    priceElement.innerHTML = Utils.calculatePrice(age, kmToGo).price + "€"
+
+    Form.reload()
   },
 }
 
@@ -54,3 +86,5 @@ const Utils = {
     return { price, discount }
   },
 }
+
+form.addEventListener("submit", Form.submit)
