@@ -1,4 +1,5 @@
 const Form = {
+  formElement: document.querySelector("form"),
   nameInput: document.querySelector("#name"),
   lastNameInput: document.querySelector("#lastname"),
   kmToGoInput: document.querySelector("#km-to-go"),
@@ -41,7 +42,6 @@ const Form = {
     Form.ageInput.value = ""
   },
 }
-const form = document.querySelector("form")
 
 const Output = {
   fillHtmlTable: (name, lastName, kmToGo, age) => {
@@ -86,4 +86,4 @@ const Utils = {
   },
 }
 
-form.addEventListener("submit", Form.submit)
+Form.formElement.addEventListener("submit", Form.submit)
